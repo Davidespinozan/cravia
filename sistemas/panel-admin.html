@@ -704,7 +704,7 @@ img{max-width:100%;height:auto}
 /* Admin sidebar mobile/tablet — convertir a nav horizontal scrolleable (sidebar es la unica nav del admin ahora) */
 @media (max-width:1100px){
   .dash-sidebar{display:flex !important;align-items:center;gap:6px;padding:12px 16px;overflow-x:auto;background:var(--green-deep);box-shadow:0 1px 0 rgba(255,243,234,0.08);-webkit-overflow-scrolling:touch;flex-wrap:nowrap}
-  .dash-sidebar > img,.dash-sidebar-tag,.dash-sidebar-section,.dash-sidebar-footer{display:none}
+  .dash-sidebar > img,.dash-sidebar-tag,.dash-sidebar-section,.dash-sidebar-footer{display:none !important}
   .dash-nav-item{flex-shrink:0;margin:0;padding:9px 14px;border-radius:18px;font-size:12px;white-space:nowrap;min-height:38px}
   .dash-nav-item .dash-nav-icon{margin-right:4px}
   .dash-nav-item.active{background:var(--milk-sugar);color:var(--green-signature);font-weight:700}
