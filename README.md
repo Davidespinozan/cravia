@@ -95,7 +95,6 @@ Después del deploy, estas URLs redirigen a los sistemas:
 
 - Los assets se cargan desde Supabase Storage — no es necesario copiarlos al repo
 - Si un video no carga, verifica que el nombre en Supabase coincida con el referenciado
-- El archivo Counter:mostrador.png tiene un ":" en el nombre — se recomienda renombrarlo a Counter-mostrador.png en Supabase para evitar problemas en algunos navegadores
 
 ---
 
