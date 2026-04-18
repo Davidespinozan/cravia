@@ -512,6 +512,8 @@ img{max-width:100%;height:auto}
 
 /* SYS5: DASHBOARD */
 .dash-app{min-height:100vh;background:var(--cream-soft);display:grid;grid-template-columns:220px 1fr}
+.dash-views{min-width:0}
+.dash-nav-item{user-select:none}
 .dash-sidebar{background:var(--green-deep);color:var(--milk-sugar);padding:24px 20px}
 .dash-sidebar-brand{font-family:'Caveat',cursive;font-size:32px;margin-bottom:4px}
 .dash-sidebar-tag{font-size:10px;letter-spacing:2.5px;text-transform:uppercase;opacity:0.6;margin-bottom:32px}
@@ -699,6 +701,15 @@ img{max-width:100%;height:auto}
   *,*::before,*::after{animation-duration:0.01ms !important;animation-iteration-count:1 !important;transition-duration:0.01ms !important;scroll-behavior:auto !important}
 }
 
+/* Admin sidebar mobile/tablet — convertir a nav horizontal scrolleable (sidebar es la unica nav del admin ahora) */
+@media (max-width:1100px){
+  .dash-sidebar{display:flex !important;align-items:center;gap:6px;padding:12px 16px;overflow-x:auto;background:var(--green-deep);box-shadow:0 1px 0 rgba(255,243,234,0.08);-webkit-overflow-scrolling:touch;flex-wrap:nowrap}
+  .dash-sidebar > img,.dash-sidebar-tag,.dash-sidebar-section,.dash-sidebar-footer{display:none}
+  .dash-nav-item{flex-shrink:0;margin:0;padding:9px 14px;border-radius:18px;font-size:12px;white-space:nowrap;min-height:38px}
+  .dash-nav-item .dash-nav-icon{margin-right:4px}
+  .dash-nav-item.active{background:var(--milk-sugar);color:var(--green-signature);font-weight:700}
+}
+
 /* Nav entre sistemas (sticky top) */
 .system-switcher{background:#003d33;color:#fff3ea;padding:0;position:sticky;top:0;z-index:1001;box-shadow:0 1px 0 rgba(255,243,234,0.08)}
 .system-switcher-inner{max-width:1400px;margin:0 auto;padding:10px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px}
@@ -742,41 +753,32 @@ img{max-width:100%;height:auto}
   </div>
 </div>
 
-<!-- Admin module selector -->
-<div style="background:#005b4c;color:#fff3ea;padding:10px 20px;display:flex;align-items:center;gap:8px;position:sticky;top:54px;z-index:1000;font-size:12px;overflow-x:auto">
-  <div style="font-size:10px;text-transform:uppercase;letter-spacing:2px;opacity:0.7;margin-right:10px;flex-shrink:0">Módulo admin:</div>
-  <div style="display:flex;gap:4px;flex:1">
-    <button class="system-tab active" onclick="showSystem('dashboard',event)">Dashboard general</button>
-    <button class="system-tab" onclick="showSystem('crm',event)">CRM &amp; Campañas</button>
-  </div>
-</div>
-
-<!-- Dashboard module -->
-<div class="system active" id="system-dashboard">
-
-  <div class="dash-app">
-    <aside class="dash-sidebar">
-      <img src="https://ltveorvqvvlyivjwxjlc.supabase.co/storage/v1/object/public/cravia/cravialogofinal.png" alt="Cravia" style="height:60px;width:auto;display:block;filter:brightness(0) invert(1);margin-bottom:6px">
-      <div class="dash-sidebar-tag">Admin · The Cookie State</div>
-      <div class="dash-sidebar-section">General</div>
-      <div class="dash-nav-item active"><span class="dash-nav-icon">◉</span>Resumen</div>
-      <div class="dash-nav-item"><span class="dash-nav-icon">◷</span>Pedidos en vivo</div>
-      <div class="dash-nav-item"><span class="dash-nav-icon">$</span>Ventas</div>
-      <div class="dash-nav-item"><span class="dash-nav-icon">⬛</span>Inventario</div>
-      <div class="dash-nav-item"><span class="dash-nav-icon">◈</span>Productos</div>
-      <div class="dash-sidebar-section">Clientes</div>
-      <div class="dash-nav-item"><span class="dash-nav-icon">♡</span>Programa Cravia</div>
-      <div class="dash-nav-item"><span class="dash-nav-icon">✉</span>Campañas</div>
-      <div class="dash-nav-item"><span class="dash-nav-icon">⌂</span>Base de clientes</div>
-      <div class="dash-sidebar-section">Operación</div>
-      <div class="dash-nav-item"><span class="dash-nav-icon">☆</span>Tiendas</div>
-      <div class="dash-nav-item"><span class="dash-nav-icon">☰</span>Reportes</div>
-      <div class="dash-nav-item"><span class="dash-nav-icon">⚙</span>Ajustes</div>
-      <div class="dash-sidebar-footer">
-        <div style="opacity:0.6;font-size:10px;letter-spacing:1px;text-transform:uppercase">Ubicación actual</div>
-        <div class="dash-location-pill"><span class="dash-location-dot"></span>3 sucursales activas</div>
-      </div>
-    </aside>
+<!-- Admin app — sidebar fijo, contenido cambia entre dashboard y CRM -->
+<div class="dash-app">
+  <aside class="dash-sidebar">
+    <img src="https://ltveorvqvvlyivjwxjlc.supabase.co/storage/v1/object/public/cravia/cravialogofinal.png" alt="Cravia" style="height:60px;width:auto;display:block;filter:brightness(0) invert(1);margin-bottom:6px">
+    <div class="dash-sidebar-tag">Admin · The Cookie State</div>
+    <div class="dash-sidebar-section">General</div>
+    <div class="dash-nav-item active" onclick="showSystem('dashboard',event)"><span class="dash-nav-icon">◉</span>Resumen</div>
+    <div class="dash-nav-item" onclick="showSystem('dashboard',event)"><span class="dash-nav-icon">◷</span>Pedidos en vivo</div>
+    <div class="dash-nav-item" onclick="showSystem('dashboard',event)"><span class="dash-nav-icon">$</span>Ventas</div>
+    <div class="dash-nav-item" onclick="showSystem('dashboard',event)"><span class="dash-nav-icon">⬛</span>Inventario</div>
+    <div class="dash-nav-item" onclick="showSystem('dashboard',event)"><span class="dash-nav-icon">◈</span>Productos</div>
+    <div class="dash-sidebar-section">Clientes</div>
+    <div class="dash-nav-item" onclick="showSystem('crm',event)"><span class="dash-nav-icon">♡</span>Programa Cravia</div>
+    <div class="dash-nav-item" onclick="showSystem('crm',event)"><span class="dash-nav-icon">✉</span>Campañas</div>
+    <div class="dash-nav-item" onclick="showSystem('crm',event)"><span class="dash-nav-icon">⌂</span>Base de clientes</div>
+    <div class="dash-sidebar-section">Operación</div>
+    <div class="dash-nav-item" onclick="showSystem('dashboard',event)"><span class="dash-nav-icon">☆</span>Tiendas</div>
+    <div class="dash-nav-item" onclick="showSystem('dashboard',event)"><span class="dash-nav-icon">☰</span>Reportes</div>
+    <div class="dash-nav-item" onclick="showSystem('dashboard',event)"><span class="dash-nav-icon">⚙</span>Ajustes</div>
+    <div class="dash-sidebar-footer">
+      <div style="opacity:0.6;font-size:10px;letter-spacing:1px;text-transform:uppercase">Ubicación actual</div>
+      <div class="dash-location-pill"><span class="dash-location-dot"></span>3 sucursales activas</div>
+    </div>
+  </aside>
+  <div class="dash-views">
+    <div class="system active" id="system-dashboard">
     <main class="dash-main">
       <div class="dash-top">
         <div>
@@ -936,12 +938,11 @@ img{max-width:100%;height:auto}
       </div>
       <div class="stryv-strip" style="margin:20px -36px -28px">Dashboard operativo Cravia · Construido por <strong>STRYV</strong></div>
     </main>
-  </div></div>
+    </div>
 
-<!-- CRM module -->
-<div class="system" id="system-crm">
-
-  <div class="crm-app">
+    <!-- Vista CRM (se muestra al clickear Programa Cravia / Campañas / Base de clientes) -->
+    <div class="system" id="system-crm">
+      <div class="crm-app">
     <div class="crm-top">
       <div>
         <div class="crm-subtitle">relación con tu gente</div>
@@ -1164,7 +1165,10 @@ img{max-width:100%;height:auto}
       </div>
     </div>
     <div class="stryv-strip" style="margin-top:24px">CRM &amp; sistema de campañas · Construido por <strong>STRYV</strong></div>
-  </div></div>
+      </div>
+    </div>
+  </div>
+</div>
 
 <div style="background:#1a1a1a;color:rgba(255,243,234,0.7);padding:20px 24px;font-size:11px;text-align:center;letter-spacing:0.3px;line-height:1.5">
   Panel admin centralizado Cravia · Construido por <strong style="color:white;letter-spacing:3px;font-weight:600">STRYV</strong>
@@ -1173,9 +1177,9 @@ img{max-width:100%;height:auto}
 function showSystem(id,e){
   document.querySelectorAll('.system').forEach(s=>s.classList.remove('active'));
   var t=document.getElementById('system-'+id);if(t)t.classList.add('active');
-  document.querySelectorAll('.system-tab').forEach(x=>x.classList.remove('active'));
-  if(e&&e.target)e.target.classList.add('active');
-  window.scrollTo(0,0);
+  document.querySelectorAll('.dash-nav-item').forEach(x=>x.classList.remove('active'));
+  if(e&&e.currentTarget)e.currentTarget.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
 }
 </script>
 </body>
