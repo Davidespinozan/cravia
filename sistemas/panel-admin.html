@@ -702,16 +702,17 @@ img{max-width:100%;height:auto}
 }
 
 /* Admin sidebar mobile/tablet — convertir a nav horizontal scrolleable (sidebar es la unica nav del admin ahora) */
+/* Alto fijo de 56px para que coincida exacto con el system-switcher */
 @media (max-width:1100px){
-  .dash-sidebar{display:flex !important;align-items:center;gap:6px;padding:12px 16px;overflow-x:auto;background:var(--green-deep);box-shadow:0 1px 0 rgba(255,243,234,0.08);-webkit-overflow-scrolling:touch;flex-wrap:nowrap}
+  .dash-sidebar{display:flex !important;align-items:center;gap:6px;padding:12px 16px;overflow-x:auto;background:var(--green-deep);border-bottom:2px solid #d4b374;-webkit-overflow-scrolling:touch;flex-wrap:nowrap;min-height:56px;box-sizing:border-box}
   .dash-sidebar > img,.dash-sidebar-tag,.dash-sidebar-section,.dash-sidebar-footer{display:none !important}
-  .dash-nav-item{flex-shrink:0;margin:0;padding:9px 14px;border-radius:18px;font-size:12px;white-space:nowrap;min-height:38px}
+  .dash-nav-item{flex-shrink:0;margin:0;padding:0 14px;border-radius:16px;font-size:12px;white-space:nowrap;min-height:32px;display:inline-flex;align-items:center}
   .dash-nav-item .dash-nav-icon{margin-right:4px}
   .dash-nav-item.active{background:var(--milk-sugar);color:var(--green-signature);font-weight:700}
 }
 
 /* Nav entre sistemas (sticky top) */
-.system-switcher{background:#003d33;color:#fff3ea;padding:0;position:sticky;top:0;z-index:1000;box-shadow:0 1px 0 rgba(255,243,234,0.08)}
+.system-switcher{background:#003d33;color:#fff3ea;padding:0;position:sticky;top:0;z-index:1000;border-bottom:2px solid #d4b374}
 .system-switcher-inner{max-width:1400px;margin:0 auto;padding:10px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px}
 .system-switcher-brand{display:flex;align-items:center;gap:14px;flex-shrink:0}
 .system-switcher-brand img{height:32px;width:auto;filter:brightness(0) invert(1)}
