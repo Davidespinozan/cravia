@@ -695,6 +695,39 @@ img{max-width:100%;height:auto}
 }
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:0.001ms!important;animation-iteration-count:1!important;transition-duration:0.001ms!important;scroll-behavior:auto!important}}
 
+/* POS — pulido mobile */
+@media (max-width:1100px){
+  .pos-cart{border-top:4px solid var(--butter-light)}
+}
+@media (max-width:640px){
+  .pos-main{padding:14px 14px 6px}
+  .pos-top-bar{padding-bottom:14px;margin-bottom:14px;gap:8px}
+  .pos-top-bar > .pos-brand-group{flex:1;min-width:0}
+  .pos-top-bar > .pos-brand-group > div:first-child img{height:32px}
+  .pos-loc-badge{display:none}
+  .pos-top-right > span{display:none}
+  .pos-top-right{gap:8px}
+  .pos-search-scan{font-size:0;padding:12px 14px;min-width:48px;display:inline-flex;align-items:center;justify-content:center;line-height:1}
+  .pos-search-scan::before{content:'📷';font-size:18px;line-height:1}
+  .pos-cats{margin-bottom:14px;gap:6px;-webkit-overflow-scrolling:touch}
+  .pos-cart{padding:20px 14px}
+  .pos-cart-header{margin-bottom:12px}
+  .pos-cart-customer{padding:8px 10px;gap:8px;margin-bottom:12px}
+  .pos-customer-tier{font-size:9px;letter-spacing:0.4px}
+  .pos-customer-points{font-size:16px}
+  .pos-cart-item{gap:8px;padding:9px 0}
+  .pos-cart-item-name{font-size:13px}
+  .pos-cart-qty{padding:3px 7px;font-size:12px;gap:6px}
+  .pos-payment-options{gap:5px;margin:12px 0}
+}
+@media (max-width:380px){
+  .pos-cats{margin-bottom:12px}
+  .pos-product-img{margin-bottom:8px}
+  .pos-product-meta{font-size:9.5px}
+  .pos-cart-header{flex-wrap:wrap;gap:4px}
+  .pos-pay{padding:14px 6px;font-size:11px}
+}
+
 /* Nav entre sistemas (sticky top) */
 .system-switcher{background:#003d33;color:#fff3ea;padding:0;position:sticky;top:0;z-index:1000;box-shadow:0 1px 0 rgba(255,243,234,0.08)}
 .system-switcher-inner{max-width:1400px;margin:0 auto;padding:10px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px}
