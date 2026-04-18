@@ -32,12 +32,13 @@
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{font-family:'Inter',sans-serif;background:var(--cream);color:var(--text-main);line-height:1.6;-webkit-font-smoothing:antialiased}
+body{font-family:'Inter',sans-serif;background:var(--cream);color:var(--text-main);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{max-width:100%;height:auto}
 
 .landing-hero{min-height:100vh;display:flex;flex-direction:column;background:var(--green-deep);color:var(--cream);position:relative;overflow:hidden}
 .landing-hero::before{content:'';position:absolute;inset:0;background-image:url('https://ltveorvqvvlyivjwxjlc.supabase.co/storage/v1/object/public/cravia/Pattern%20loyalty%20card.png');background-size:280px;opacity:0.04;pointer-events:none}
 
-.nav{padding:24px 40px;display:flex;justify-content:space-between;align-items:center;position:relative;z-index:2}
+.nav{padding:24px 40px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;position:relative;z-index:2}
 .nav-logo{display:flex;align-items:center;gap:16px}
 .nav-logo img{height:38px;width:auto;filter:brightness(0) invert(1)}
 .nav-logo-tag{font-size:10.5px;letter-spacing:3px;text-transform:uppercase;opacity:0.6;border-left:1px solid rgba(255,243,234,0.2);padding-left:14px;font-weight:500}
@@ -47,13 +48,17 @@ body{font-family:'Inter',sans-serif;background:var(--cream);color:var(--text-mai
 .hero-center{flex:1;display:flex;align-items:center;justify-content:center;padding:40px;position:relative;z-index:2}
 .hero-inner{max-width:920px;text-align:center}
 .hero-eyebrow{display:inline-block;padding:6px 16px;background:rgba(255,243,234,0.08);border:1px solid rgba(255,243,234,0.2);border-radius:24px;font-size:11px;letter-spacing:3px;text-transform:uppercase;margin-bottom:32px;color:var(--butter-light)}
-.hero-title{font-family:'DM Serif Display',serif;font-size:clamp(42px,7vw,88px);line-height:1;letter-spacing:-2px;margin-bottom:28px}
+.hero-title{font-family:'DM Serif Display',serif;font-size:clamp(38px,7vw,88px);line-height:1.05;letter-spacing:-1px;margin-bottom:28px;overflow-wrap:break-word}
 .hero-title .italic{font-style:italic;color:var(--butter-light)}
 .hero-sub{font-size:17px;line-height:1.7;max-width:640px;margin:0 auto 48px;opacity:0.85;font-weight:300}
 .hero-handwritten{font-family:'Caveat',cursive;font-size:36px;color:var(--butter-light);margin-bottom:8px}
 
-.scroll-hint{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);font-size:11px;letter-spacing:3px;text-transform:uppercase;opacity:0.6;z-index:2;animation:pulse 2s ease-in-out infinite}
+.scroll-hint{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);font-size:11px;letter-spacing:3px;text-transform:uppercase;opacity:0.6;z-index:2;animation:pulse 2s ease-in-out infinite;white-space:nowrap}
 @keyframes pulse{0%,100%{opacity:0.4;transform:translate(-50%,0)}50%{opacity:0.8;transform:translate(-50%,6px)}}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:0.001ms !important;animation-iteration-count:1 !important;transition-duration:0.001ms !important;scroll-behavior:auto !important}
+  .scroll-hint{animation:none;opacity:0.6}
+}
 
 .systems{padding:120px 40px;background:var(--cream)}
 .systems-inner{max-width:1280px;margin:0 auto}
@@ -81,21 +86,47 @@ body{font-family:'Inter',sans-serif;background:var(--cream);color:var(--text-mai
 .footer-credit{font-size:11px;opacity:0.5;letter-spacing:2px;margin-top:28px}
 .footer-credit strong{letter-spacing:3px;font-weight:600;color:#fff}
 
+@media (max-width:1100px){
+  .systems{padding:100px 32px}
+}
 @media (max-width:900px){
-  .systems-header{grid-template-columns:1fr;gap:20px}
-  .systems-intro{margin-left:0}
-  .systems-grid{grid-template-columns:1fr}
+  .systems{padding:90px 28px}
+  .systems-header{grid-template-columns:1fr;gap:20px;margin-bottom:56px}
+  .systems-intro{margin-left:0;max-width:none}
+  .systems-grid{grid-template-columns:1fr;gap:20px}
   .systems-title{font-size:42px}
   .nav{padding:20px 24px}
   .nav-logo-tag{display:none}
+  .hero-sub{margin-bottom:36px}
 }
 @media (max-width:640px){
-  .hero-center{padding:40px 24px}
-  .hero-handwritten{font-size:28px}
-  .systems{padding:80px 24px}
+  .nav{padding:18px 20px;gap:12px}
+  .nav-logo img{height:32px}
+  .nav-credit{font-size:10px}
+  .hero-center{padding:32px 20px}
+  .hero-eyebrow{margin-bottom:24px;font-size:10px;letter-spacing:2px}
+  .hero-handwritten{font-size:26px}
+  .hero-sub{font-size:15px;margin-bottom:32px;line-height:1.6}
+  .scroll-hint{bottom:20px;font-size:10px;letter-spacing:2px}
+  .systems{padding:72px 20px}
+  .systems-eyebrow{font-size:28px}
   .systems-title{font-size:34px}
-  .system-card{padding:28px}
+  .systems-header{margin-bottom:40px}
+  .system-card{padding:28px;border-radius:20px}
   .system-card-title{font-size:28px}
+  .footer{padding:48px 20px}
+}
+@media (max-width:380px){
+  .nav{padding:16px}
+  .nav-logo img{height:28px}
+  .nav-credit{font-size:9px;letter-spacing:0.5px}
+  .hero-handwritten{font-size:22px}
+  .hero-sub{font-size:14px}
+  .systems{padding:60px 16px}
+  .systems-title{font-size:30px;letter-spacing:-0.5px}
+  .system-card{padding:24px}
+  .system-card-title{font-size:24px}
+  .footer-text{font-size:12px}
 }
 </style>
 </head>
