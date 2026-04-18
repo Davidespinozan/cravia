@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cravia — Sistema operativo digital | STRYV</title>
+<meta name="description" content="Ecosistema digital completo de Cravia — The Cookie State. Plataforma cliente, POS, kiosco self-service y panel admin.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Caveat:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --green-deep:#003d33;
+  --green-signature:#005b4c;
+  --green-ny:#0c8488;
+  --cream:#fff3ea;
+  --cream-soft:#f7f0e6;
+  --butter-light:#d4b374;
+  --butter-brown:#9c7c5c;
+  --milk-sugar:#fff3ea;
+  --text-main:#1a1a1a;
+  --text-soft:#4a5954;
+  --text-muted:#8a9590;
+  --border-soft:rgba(0,91,76,0.1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--cream);color:var(--text-main);line-height:1.6;-webkit-font-smoothing:antialiased}
+
+.landing-hero{min-height:100vh;display:flex;flex-direction:column;background:var(--green-deep);color:var(--cream);position:relative;overflow:hidden}
+.landing-hero::before{content:'';position:absolute;inset:0;background-image:url('https://ltveorvqvvlyivjwxjlc.supabase.co/storage/v1/object/public/cravia/Pattern%20loyalty%20card.png');background-size:280px;opacity:0.04;pointer-events:none}
+
+.nav{padding:24px 40px;display:flex;justify-content:space-between;align-items:center;position:relative;z-index:2}
+.nav-logo{display:flex;align-items:center;gap:16px}
+.nav-logo img{height:38px;width:auto;filter:brightness(0) invert(1)}
+.nav-logo-tag{font-size:10.5px;letter-spacing:3px;text-transform:uppercase;opacity:0.6;border-left:1px solid rgba(255,243,234,0.2);padding-left:14px;font-weight:500}
+.nav-credit{font-size:10.5px;opacity:0.5;letter-spacing:1px}
+.nav-credit strong{letter-spacing:3px;font-weight:600;color:#fff}
+
+.hero-center{flex:1;display:flex;align-items:center;justify-content:center;padding:40px;position:relative;z-index:2}
+.hero-inner{max-width:920px;text-align:center}
+.hero-eyebrow{display:inline-block;padding:6px 16px;background:rgba(255,243,234,0.08);border:1px solid rgba(255,243,234,0.2);border-radius:24px;font-size:11px;letter-spacing:3px;text-transform:uppercase;margin-bottom:32px;color:var(--butter-light)}
+.hero-title{font-family:'DM Serif Display',serif;font-size:clamp(42px,7vw,88px);line-height:1;letter-spacing:-2px;margin-bottom:28px}
+.hero-title .italic{font-style:italic;color:var(--butter-light)}
+.hero-sub{font-size:17px;line-height:1.7;max-width:640px;margin:0 auto 48px;opacity:0.85;font-weight:300}
+.hero-handwritten{font-family:'Caveat',cursive;font-size:36px;color:var(--butter-light);margin-bottom:8px}
+
+.scroll-hint{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);font-size:11px;letter-spacing:3px;text-transform:uppercase;opacity:0.6;z-index:2;animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:0.4;transform:translate(-50%,0)}50%{opacity:0.8;transform:translate(-50%,6px)}}
+
+.systems{padding:120px 40px;background:var(--cream)}
+.systems-inner{max-width:1280px;margin:0 auto}
+.systems-header{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:end;margin-bottom:80px}
+.systems-eyebrow{font-family:'Caveat',cursive;font-size:34px;color:var(--green-signature);margin-bottom:6px}
+.systems-title{font-family:'DM Serif Display',serif;font-size:56px;line-height:1.02;color:var(--green-deep);letter-spacing:-1px}
+.systems-title .italic{font-style:italic;color:var(--butter-brown)}
+.systems-intro{font-size:15px;line-height:1.7;color:var(--text-soft);max-width:440px;margin-left:auto}
+
+.systems-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px}
+.system-card{background:#fff;border-radius:24px;padding:36px;border:1px solid var(--border-soft);cursor:pointer;text-decoration:none;color:inherit;display:flex;flex-direction:column;transition:transform 0.6s cubic-bezier(0.23,1,0.32,1),box-shadow 0.6s cubic-bezier(0.23,1,0.32,1),border-color 0.6s;position:relative;overflow:hidden}
+.system-card:hover{transform:translateY(-6px);box-shadow:0 28px 56px rgba(0,61,51,0.12);border-color:rgba(0,91,76,0.2)}
+.system-card-num{font-family:'DM Serif Display',serif;font-size:16px;color:var(--butter-brown);margin-bottom:20px;letter-spacing:1px;font-style:italic}
+.system-card-title{font-family:'DM Serif Display',serif;font-size:36px;line-height:1.05;color:var(--green-deep);margin-bottom:14px;letter-spacing:-0.5px}
+.system-card-desc{font-size:14px;line-height:1.65;color:var(--text-soft);margin-bottom:28px;flex:1}
+.system-card-tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px}
+.tag{padding:4px 12px;background:var(--cream);color:var(--green-signature);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;border-radius:20px;font-weight:500}
+.system-card-cta{display:flex;align-items:center;justify-content:space-between;padding-top:20px;border-top:1px solid var(--border-soft);font-size:13px;font-weight:500;color:var(--green-signature);letter-spacing:1px;text-transform:uppercase}
+.system-card-cta-arrow{width:36px;height:36px;border-radius:50%;background:var(--green-deep);color:var(--cream);display:flex;align-items:center;justify-content:center;transition:transform 0.4s cubic-bezier(0.23,1,0.32,1),background 0.4s}
+.system-card:hover .system-card-cta-arrow{transform:translateX(6px);background:var(--green-ny)}
+
+.footer{padding:60px 40px;background:var(--green-deep);color:var(--cream);text-align:center}
+.footer-logo{height:36px;width:auto;filter:brightness(0) invert(1);opacity:0.9;margin-bottom:20px}
+.footer-text{font-size:13px;opacity:0.7;line-height:1.7;max-width:540px;margin:0 auto 8px}
+.footer-credit{font-size:11px;opacity:0.5;letter-spacing:2px;margin-top:28px}
+.footer-credit strong{letter-spacing:3px;font-weight:600;color:#fff}
+
+@media (max-width:900px){
+  .systems-header{grid-template-columns:1fr;gap:20px}
+  .systems-intro{margin-left:0}
+  .systems-grid{grid-template-columns:1fr}
+  .systems-title{font-size:42px}
+  .nav{padding:20px 24px}
+  .nav-logo-tag{display:none}
+}
+@media (max-width:640px){
+  .hero-center{padding:40px 24px}
+  .hero-handwritten{font-size:28px}
+  .systems{padding:80px 24px}
+  .systems-title{font-size:34px}
+  .system-card{padding:28px}
+  .system-card-title{font-size:28px}
+}
+</style>
+</head>
+<body>
+
+<section class="landing-hero">
+  <nav class="nav">
+    <div class="nav-logo">
+      <img src="https://ltveorvqvvlyivjwxjlc.supabase.co/storage/v1/object/public/cravia/cravialogofinal.png" alt="Cravia">
+      <span class="nav-logo-tag">Sistema operativo digital</span>
+    </div>
+    <div class="nav-credit">Construido por <strong>STRYV</strong></div>
+  </nav>
+
+  <div class="hero-center">
+    <div class="hero-inner">
+      <span class="hero-eyebrow">The Cookie State · Culiacán</span>
+      <div class="hero-handwritten">Un ecosistema completo para</div>
+      <h1 class="hero-title">Cravia<span class="italic"> corriendo</span><br>a toda <span class="italic">máquina</span>.</h1>
+      <p class="hero-sub">Cuatro sistemas integrados para que Cravia venda en línea, en tienda, en kiosco y se administre desde un solo panel. Todo conectado. Todo en tiempo real.</p>
+    </div>
+  </div>
+
+  <div class="scroll-hint">Ver los 4 sistemas ↓</div>
+</section>
+
+<section class="systems">
+  <div class="systems-inner">
+    <div class="systems-header">
+      <div>
+        <div class="systems-eyebrow">— Los cuatro sistemas</div>
+        <h2 class="systems-title">Un <span class="italic">sistema</span> operativo<br>digital, hecho a la medida.</h2>
+      </div>
+      <p class="systems-intro">Cada módulo resuelve una parte del negocio y se conecta con los demás. No hay información duplicada ni procesos manuales — todo fluye desde un solo lugar.</p>
+    </div>
+
+    <div class="systems-grid">
+      <a href="sistemas/plataforma-cliente.html" class="system-card">
+        <div class="system-card-num">— 01</div>
+        <h3 class="system-card-title">Plataforma del cliente</h3>
+        <p class="system-card-desc">Sitio web y app para que los clientes conozcan la marca, ordenen online, se suscriban al Cookie Club y sigan su entrega en tiempo real.</p>
+        <div class="system-card-tags">
+          <span class="tag">Web + App</span>
+          <span class="tag">Ecommerce</span>
+          <span class="tag">Suscripción</span>
+          <span class="tag">Loyalty</span>
+        </div>
+        <div class="system-card-cta">
+          <span>Ver sistema</span>
+          <span class="system-card-cta-arrow">→</span>
+        </div>
+      </a>
+
+      <a href="sistemas/venta-cajera.html" class="system-card">
+        <div class="system-card-num">— 02</div>
+        <h3 class="system-card-title">Punto de venta</h3>
+        <p class="system-card-desc">POS para el mostrador. Cobra rápido, imprime ticket, manda la orden a producción y sincroniza el inventario en tiempo real.</p>
+        <div class="system-card-tags">
+          <span class="tag">POS</span>
+          <span class="tag">Cobros</span>
+          <span class="tag">Inventario</span>
+          <span class="tag">Tickets</span>
+        </div>
+        <div class="system-card-cta">
+          <span>Ver sistema</span>
+          <span class="system-card-cta-arrow">→</span>
+        </div>
+      </a>
+
+      <a href="sistemas/venta-kiosco.html" class="system-card">
+        <div class="system-card-num">— 03</div>
+        <h3 class="system-card-title">Kiosco self-service</h3>
+        <p class="system-card-desc">Pantalla touch en tienda tipo Shake Shack. El cliente ordena, paga y recoge sin fila. Reduce tiempos y aumenta el ticket promedio.</p>
+        <div class="system-card-tags">
+          <span class="tag">Self-order</span>
+          <span class="tag">Touch</span>
+          <span class="tag">En tienda</span>
+          <span class="tag">Upsell auto</span>
+        </div>
+        <div class="system-card-cta">
+          <span>Ver sistema</span>
+          <span class="system-card-cta-arrow">→</span>
+        </div>
+      </a>
+
+      <a href="sistemas/panel-admin.html" class="system-card">
+        <div class="system-card-num">— 04</div>
+        <h3 class="system-card-title">Panel admin</h3>
+        <p class="system-card-desc">El cerebro del negocio. Ventas, inventario, nómina, programa de lealtad, reportes y reseñas de todas las sucursales en un solo lugar.</p>
+        <div class="system-card-tags">
+          <span class="tag">Dashboard</span>
+          <span class="tag">Multi-sucursal</span>
+          <span class="tag">Reportes</span>
+          <span class="tag">CRM</span>
+        </div>
+        <div class="system-card-cta">
+          <span>Ver sistema</span>
+          <span class="system-card-cta-arrow">→</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <img src="https://ltveorvqvvlyivjwxjlc.supabase.co/storage/v1/object/public/cravia/cravialogofinal.png" alt="Cravia" class="footer-logo">
+  <p class="footer-text">The Cookie State · Culiacán, Sinaloa</p>
+  <p class="footer-text">Propuesta de sistema operativo digital — abril 2026</p>
+  <div class="footer-credit">Diseñado y construido por <strong>STRYV</strong></div>
+</footer>
+
+</body>
+</html>

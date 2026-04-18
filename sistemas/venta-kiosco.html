@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cravia — Kiosco Self-Service</title>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --green-signature:#005b4c;--green-deep:#003d33;--green-ny:#0c8488;
+  --butter-brown:#9c7c5c;--butter-light:#c9a57d;
+  --milk-sugar:#fff3ea;--cream-soft:#faf0e4;--cream-warm:#f5e8d8;
+  --text-dark:#1a1a1a;--text-soft:#4a4a4a;--text-muted:#8a8a8a;
+  --border-soft:#ebe0d0;--border:#d9cab4;
+  --success:#2d7548;--warning:#c4882b;
+}
+body{font-family:'Inter',-apple-system,sans-serif;background:#2a2622;color:var(--text-dark);min-height:100vh;-webkit-font-smoothing:antialiased;padding:40px 20px}
+
+/* Top bar */
+.top-bar{background:#003d33;color:#fff3ea;padding:10px 20px;display:flex;align-items:center;justify-content:space-between;position:fixed;top:0;left:0;right:0;z-index:1000;font-size:12px}
+.top-bar-brand{font-family:'Caveat',cursive;font-size:22px;font-weight:600}
+.top-bar-brand span{font-family:'Inter',sans-serif;font-size:9px;font-weight:500;letter-spacing:4px;margin-left:6px;opacity:0.7;text-transform:uppercase}
+.top-bar-label{font-size:10px;text-transform:uppercase;letter-spacing:2px;opacity:0.6}
+.top-bar-credit{font-size:10px;opacity:0.5;letter-spacing:1px}
+.top-bar-credit strong{letter-spacing:3px;font-weight:600;color:white}
+
+/* Intro */
+.intro{text-align:center;color:var(--milk-sugar);padding:60px 20px 40px}
+.intro-eyebrow{font-family:'Caveat',cursive;font-size:28px;color:var(--butter-light);margin-bottom:8px}
+.intro-title{font-family:'DM Serif Display',serif;font-size:44px;color:var(--milk-sugar);letter-spacing:-0.8px;line-height:1.05;margin-bottom:14px}
+.intro-sub{font-size:14px;opacity:0.8;max-width:640px;margin:0 auto;line-height:1.6}
+
+/* Kiosk display frame */
+.kiosk-row{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;max-width:1400px;margin:20px auto 0;align-items:start}
+.kiosk-wrap{display:flex;flex-direction:column;align-items:center}
+.kiosk{
+  width:100%;
+  max-width:420px;
+  aspect-ratio:9/16;
+  background:#0a0a0a;
+  border-radius:28px;
+  padding:16px;
+  box-shadow:0 30px 80px rgba(0,0,0,0.6),inset 0 0 0 1px rgba(255,255,255,0.05);
+  position:relative;
+}
+.kiosk-screen{width:100%;height:100%;background:var(--milk-sugar);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;position:relative}
+
+/* SCREEN 1 - Welcome screen */
+.s1{background:linear-gradient(135deg,var(--green-signature) 0%,var(--green-deep) 100%);color:var(--milk-sugar);display:flex;flex-direction:column;justify-content:space-between;padding:40px 32px;position:relative;overflow:hidden;height:100%}
+.s1::before{content:'';position:absolute;right:-100px;top:-100px;width:400px;height:400px;background:radial-gradient(circle,rgba(12,132,136,0.35),transparent 60%);pointer-events:none}
+.s1-brand{position:relative;z-index:2}
+.s1-brand-name{font-family:'Caveat',cursive;font-size:56px;line-height:1;margin-bottom:6px}
+.s1-brand-tag{font-family:'Inter',sans-serif;font-size:11px;font-weight:500;letter-spacing:5px;opacity:0.8;text-transform:uppercase}
+.s1-center{text-align:center;position:relative;z-index:2}
+.s1-cookie{width:220px;height:220px;margin:0 auto 30px;background:radial-gradient(circle at 50% 50%,#d4a574 10%,#9c7c5c 50%,#6b4e2f 90%);border-radius:50%;box-shadow:inset -15px -15px 50px rgba(0,0,0,0.3),inset 15px 15px 50px rgba(255,200,150,0.2),0 20px 60px rgba(0,0,0,0.4);position:relative;overflow:hidden;background-size:cover;background-position:center}
+.s1-cookie.has-real::before{display:none}
+.s1-cookie.has-real{box-shadow:0 20px 60px rgba(0,0,0,0.5)}
+.s1-cookie::before{content:'';position:absolute;top:25%;left:20%;width:6%;height:6%;background:#2a1810;border-radius:50%;box-shadow:40px 20px 0 -2px #2a1810,90px 50px 0 -4px #3a1f14,25px 90px 0 0 #2a1810,80px 120px 0 -3px #2a1810,140px 35px 0 -6px #3a1f14,150px 110px 0 -4px #2a1810,10px 160px 0 -3px #2a1810}
+.s1-headline{font-family:'DM Serif Display',serif;font-size:42px;line-height:1.05;letter-spacing:-0.8px;margin-bottom:14px}
+.s1-headline em{font-style:italic;color:var(--butter-light)}
+.s1-sub{font-size:14px;opacity:0.85;line-height:1.5;max-width:280px;margin:0 auto;font-weight:300}
+.s1-cta-wrap{position:relative;z-index:2;text-align:center}
+.s1-cta{padding:26px 48px;background:var(--butter-light);color:var(--green-deep);border:none;border-radius:40px;font-family:inherit;font-size:18px;font-weight:700;letter-spacing:2px;text-transform:uppercase;cursor:pointer;box-shadow:0 10px 30px rgba(201,165,125,0.4);display:inline-flex;align-items:center;gap:14px;margin-bottom:16px;animation:pulseCta 2.2s infinite}
+@keyframes pulseCta{0%,100%{transform:scale(1);box-shadow:0 10px 30px rgba(201,165,125,0.4)}50%{transform:scale(1.03);box-shadow:0 14px 40px rgba(201,165,125,0.55)}}
+.s1-tap-hint{font-family:'Caveat',cursive;font-size:20px;color:var(--butter-light);opacity:0.85}
+.s1-langs{display:flex;justify-content:center;gap:14px;margin-top:14px;font-size:10.5px;letter-spacing:1.5px;opacity:0.6}
+.s1-langs span{cursor:pointer}
+.s1-langs span.active{opacity:1;font-weight:700;color:var(--butter-light)}
+
+/* SCREEN 2 - Menu */
+.s2{background:var(--milk-sugar);display:flex;flex-direction:column;height:100%}
+.s2-header{background:var(--green-signature);color:var(--milk-sugar);padding:20px 22px}
+.s2-header-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.s2-brand-mini{font-family:'Caveat',cursive;font-size:22px}
+.s2-step{font-size:10px;letter-spacing:2px;text-transform:uppercase;opacity:0.8}
+.s2-title{font-family:'DM Serif Display',serif;font-size:28px;line-height:1.05;letter-spacing:-0.5px}
+.s2-subtitle{font-family:'Caveat',cursive;font-size:18px;color:var(--butter-light);margin-top:4px}
+.s2-cats{background:var(--cream-soft);padding:12px 20px;display:flex;gap:6px;overflow-x:auto;border-bottom:1px solid var(--border-soft)}
+.s2-cat{padding:9px 16px;background:white;border:1.5px solid var(--border-soft);border-radius:20px;font-family:inherit;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;color:var(--text-soft)}
+.s2-cat.active{background:var(--green-signature);color:var(--milk-sugar);border-color:var(--green-signature)}
+.s2-items{flex:1;padding:16px;display:grid;grid-template-columns:1fr 1fr;gap:14px;overflow-y:auto;background:var(--cream-soft)}
+.s2-item{background:white;border-radius:14px;padding:12px;cursor:pointer;transition:all 0.15s;position:relative;border:2px solid transparent;display:flex;flex-direction:column}
+.s2-item:hover{border-color:var(--green-signature);transform:translateY(-2px)}
+.s2-item.selected{border-color:var(--green-signature);box-shadow:0 4px 16px rgba(0,91,76,0.15)}
+.s2-item-badge{position:absolute;top:10px;right:10px;background:var(--butter-light);color:var(--green-deep);padding:3px 8px;border-radius:10px;font-size:8.5px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;z-index:2}
+.s2-img{width:100%;aspect-ratio:1;border-radius:10px;background:radial-gradient(circle at 45% 45%,#d4a574 15%,#9c7c5c 55%,#6b4e2f 90%);position:relative;overflow:hidden;margin-bottom:10px;background-size:cover;background-position:center}
+.s2-img.has-real::before{display:none}
+.s2-img::before{content:'';position:absolute;top:28%;left:30%;width:7%;height:7%;background:#2a1810;border-radius:50%;box-shadow:18px 8px 0 -1px #2a1810,38px 25px 0 -2px #2a1810,10px 40px 0 0 #3a1f14,48px 48px 0 -2px #2a1810,60px 18px 0 -3px #3a1f14}
+.s2-name{font-family:'DM Serif Display',serif;font-size:16px;color:var(--green-signature);line-height:1.15;margin-bottom:4px}
+.s2-desc{font-size:10.5px;color:var(--text-soft);line-height:1.35;margin-bottom:8px;flex:1}
+.s2-foot{display:flex;justify-content:space-between;align-items:center}
+.s2-price{font-family:'DM Serif Display',serif;font-size:18px;color:var(--green-signature)}
+.s2-add{width:30px;height:30px;background:var(--green-signature);color:var(--milk-sugar);border:none;border-radius:50%;font-size:18px;cursor:pointer}
+.s2-cart-bar{background:var(--green-signature);color:var(--milk-sugar);padding:14px 20px;display:flex;justify-content:space-between;align-items:center;cursor:pointer}
+.s2-cart-info{display:flex;align-items:center;gap:10px}
+.s2-cart-count{background:var(--butter-light);color:var(--green-deep);width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px}
+.s2-cart-label{font-size:13px;font-weight:600}
+.s2-cart-total{font-family:'DM Serif Display',serif;font-size:22px}
+.s2-cart-arrow{font-size:18px;margin-left:8px}
+
+/* SCREEN 3 - Checkout/Payment */
+.s3{background:var(--milk-sugar);display:flex;flex-direction:column;height:100%}
+.s3-header{background:var(--green-signature);color:var(--milk-sugar);padding:20px 22px;display:flex;justify-content:space-between;align-items:center}
+.s3-header-back{display:flex;align-items:center;gap:10px}
+.s3-back-btn{width:32px;height:32px;background:rgba(255,243,234,0.15);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px}
+.s3-title{font-family:'DM Serif Display',serif;font-size:20px;line-height:1}
+.s3-title-sub{font-size:10px;letter-spacing:1px;text-transform:uppercase;opacity:0.7;margin-top:2px}
+.s3-content{flex:1;padding:18px 20px;overflow-y:auto;background:var(--cream-soft)}
+.s3-section-label{font-size:9.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-muted);font-weight:600;margin:14px 0 8px}
+.s3-section-label:first-child{margin-top:0}
+.s3-method-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px}
+.s3-method{padding:16px 10px;background:white;border:2px solid var(--border-soft);border-radius:12px;text-align:center;cursor:pointer;transition:all 0.15s}
+.s3-method.active{border-color:var(--green-signature);background:rgba(0,91,76,0.04)}
+.s3-method-icon{font-size:22px;margin-bottom:6px}
+.s3-method-name{font-size:11.5px;font-weight:700;letter-spacing:0.5px;color:var(--text-dark)}
+.s3-method-sub{font-size:9.5px;color:var(--text-muted);margin-top:2px}
+.s3-order-summary{background:white;border-radius:12px;padding:14px 16px;margin-bottom:16px}
+.s3-sum-item{display:flex;justify-content:space-between;padding:6px 0;font-size:12px;color:var(--text-soft);border-bottom:1px dashed var(--border-soft)}
+.s3-sum-item:last-child{border-bottom:none}
+.s3-sum-item-name{font-weight:500;color:var(--text-dark)}
+.s3-sum-item-qty{color:var(--butter-brown);font-weight:700;margin-right:6px}
+.s3-totals{background:white;border-radius:12px;padding:14px 16px;margin-bottom:16px}
+.s3-total-row{display:flex;justify-content:space-between;font-size:12px;color:var(--text-soft);margin-bottom:5px}
+.s3-total-row.grand{font-family:'DM Serif Display',serif;font-size:26px;color:var(--green-signature);padding-top:8px;margin-top:8px;border-top:1px solid var(--border-soft)}
+.s3-loyalty{background:var(--cream-warm);border-left:3px solid var(--butter-light);padding:10px 12px;border-radius:6px;margin-bottom:16px;font-size:11.5px;color:var(--text-dark);line-height:1.4}
+.s3-loyalty strong{color:var(--butter-brown)}
+.s3-pay-cta{background:var(--green-signature);color:var(--milk-sugar);border:none;border-radius:14px;padding:18px;font-family:inherit;font-size:14px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;display:flex;justify-content:space-between;align-items:center;width:100%}
+
+/* Screen labels */
+.screen-label{text-align:center;margin-top:20px;color:var(--milk-sugar)}
+.screen-label-num{font-size:11px;letter-spacing:2.5px;text-transform:uppercase;opacity:0.55;font-weight:600}
+.screen-label-title{font-family:'DM Serif Display',serif;font-size:18px;color:var(--butter-light);margin-top:4px;line-height:1.2}
+.screen-label-sub{font-size:11px;opacity:0.7;margin-top:6px;line-height:1.4;max-width:260px;margin-left:auto;margin-right:auto}
+
+/* Pedestal simulation */
+.pedestal{
+  width:40%;height:8px;background:linear-gradient(to bottom,#0a0a0a,#2a2622);margin:0 auto;
+  border-radius:0 0 6px 6px;
+  box-shadow:0 4px 8px rgba(0,0,0,0.4);
+}
+
+/* Features section */
+.features{max-width:1200px;margin:80px auto 40px;padding:0 20px;color:var(--milk-sugar)}
+.features-title{font-family:'DM Serif Display',serif;font-size:36px;text-align:center;margin-bottom:8px;letter-spacing:-0.5px}
+.features-sub{text-align:center;font-size:13px;opacity:0.7;margin-bottom:50px;max-width:540px;margin-left:auto;margin-right:auto;line-height:1.6}
+.features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.feature-card{background:rgba(255,243,234,0.04);border:1px solid rgba(255,243,234,0.1);border-radius:16px;padding:28px 24px;backdrop-filter:blur(10px)}
+.feature-icon{font-size:32px;margin-bottom:14px;display:block}
+.feature-name{font-family:'DM Serif Display',serif;font-size:20px;color:var(--butter-light);margin-bottom:8px;line-height:1.1}
+.feature-desc{font-size:12.5px;color:rgba(255,243,234,0.75);line-height:1.55}
+
+/* Footer */
+.footer{background:#1a1a1a;color:rgba(255,243,234,0.7);padding:20px 24px;font-size:11px;text-align:center;letter-spacing:0.3px;line-height:1.5;margin-top:60px}
+.footer strong{color:white;letter-spacing:3px;font-weight:600}
+
+/* Context Hero — sección contextual del sistema */
+.context-hero{max-width:1200px;margin:40px auto 60px;padding:0 32px}
+.context-hero-inner{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;background:#fff3ea;border-radius:24px;padding:40px;border:1px solid rgba(0,91,76,0.08)}
+.context-hero-eyebrow{font-family:'Caveat',cursive;font-size:28px;color:#005b4c;margin-bottom:8px}
+.context-hero-title{font-family:'DM Serif Display',serif;font-size:38px;color:#003d33;line-height:1.05;margin-bottom:18px;letter-spacing:-0.5px}
+.context-hero-title em{color:#BFA065;font-style:italic}
+.context-hero-desc{font-size:15px;color:#4a5954;line-height:1.65;margin-bottom:16px}
+.context-hero-list{list-style:none;padding:0;margin:0;font-size:13.5px;color:#3a4a44;line-height:2}
+.context-hero-list li{padding-left:20px;position:relative}
+.context-hero-list li::before{content:'✓';position:absolute;left:0;color:#005b4c;font-weight:600}
+.context-hero-media{border-radius:18px;overflow:hidden;aspect-ratio:1/1;box-shadow:0 20px 50px rgba(0,61,51,0.15);position:relative}
+.context-hero-media img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 1.4s cubic-bezier(0.23,1,0.32,1)}
+.context-hero:hover .context-hero-media img{transform:scale(1.04)}
+
+@media (max-width:1100px){
+  .kiosk-row{grid-template-columns:1fr;gap:60px}
+  .features-grid{grid-template-columns:1fr;gap:14px}
+}
+@media (max-width:900px){
+  .context-hero{padding:0 20px;margin:24px auto 30px}
+  .context-hero-inner{grid-template-columns:1fr;padding:28px;gap:28px}
+  .context-hero-title{font-size:32px}
+  .context-hero-media{aspect-ratio:4/3}
+}
+@media (max-width:640px){
+  body{padding:20px 10px}
+  .intro-title{font-size:32px}
+  .features-title{font-size:28px}
+  .context-hero-inner{padding:22px;border-radius:20px}
+  .context-hero-title{font-size:26px}
+  .context-hero-eyebrow{font-size:24px}
+  .context-hero-desc{font-size:14px}
+  .context-hero-list{font-size:12.5px}
+}
+
+/* Nav entre sistemas (sticky top) */
+.system-switcher{background:#003d33;color:#fff3ea;padding:0;position:sticky;top:0;z-index:1000;box-shadow:0 1px 0 rgba(255,243,234,0.08);margin:-20px -10px 0}
+.system-switcher-inner{max-width:1400px;margin:0 auto;padding:10px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.system-switcher-brand{display:flex;align-items:center;gap:14px;flex-shrink:0}
+.system-switcher-brand img{height:32px;width:auto;filter:brightness(0) invert(1)}
+.system-switcher-brand-tag{font-size:10px;text-transform:uppercase;letter-spacing:2px;opacity:0.55;border-left:1px solid rgba(255,243,234,0.2);padding-left:12px;font-weight:500}
+.system-switcher-tabs{display:flex;align-items:center;gap:4px;flex-wrap:wrap}
+.system-switcher-tab{padding:6px 14px;border-radius:20px;font-size:11.5px;text-transform:uppercase;letter-spacing:1.5px;font-weight:500;color:rgba(255,243,234,0.7);text-decoration:none;transition:background 0.3s,color 0.3s;cursor:pointer;background:transparent;border:none;font-family:inherit;white-space:nowrap}
+.system-switcher-tab:hover{color:#fff3ea;background:rgba(255,243,234,0.08)}
+.system-switcher-tab.active{background:#d4b374;color:#003d33;font-weight:600}
+.system-switcher-credit{font-size:10px;opacity:0.45;letter-spacing:1px;flex-shrink:0}
+.system-switcher-credit strong{letter-spacing:3px;font-weight:600;color:#fff}
+.system-switcher-toggle{display:none;background:transparent;border:none;color:#fff3ea;font-size:20px;cursor:pointer;padding:4px 8px}
+
+@media (max-width:900px){
+  .system-switcher-credit{display:none}
+  .system-switcher-brand-tag{display:none}
+  .system-switcher-toggle{display:block}
+  .system-switcher-tabs{position:absolute;top:100%;left:0;right:0;background:#003d33;flex-direction:column;align-items:stretch;gap:0;padding:8px 16px 16px;box-shadow:0 4px 20px rgba(0,0,0,0.2);max-height:0;overflow:hidden;transition:max-height 0.4s ease,padding 0.4s ease}
+  .system-switcher-tabs.open{max-height:400px;padding:8px 16px 16px}
+  .system-switcher-tab{padding:14px 18px;border-radius:8px;font-size:13px;width:100%;text-align:left}
+  .system-switcher-inner{position:relative;padding:12px 16px}
+}
+</style>
+</head>
+<body>
+
+<!-- Nav entre sistemas -->
+<div class="system-switcher">
+  <div class="system-switcher-inner">
+    <div class="system-switcher-brand">
+      <a href="../index.html" style="display:flex;align-items:center;gap:12px;text-decoration:none"><img src="https://ltveorvqvvlyivjwxjlc.supabase.co/storage/v1/object/public/cravia/cravialogofinal.png" alt="Cravia"></a>
+      <span class="system-switcher-brand-tag">Sistema 03 · Kiosco self-service</span>
+    </div>
+    <button class="system-switcher-toggle" onclick="document.querySelector('.system-switcher-tabs').classList.toggle('open')" aria-label="Menú">☰</button>
+    <nav class="system-switcher-tabs">
+      <a href="plataforma-cliente.html" class="system-switcher-tab">01 · Cliente</a>
+      <a href="venta-cajera.html" class="system-switcher-tab">02 · POS</a>
+      <a href="venta-kiosco.html" class="system-switcher-tab active">03 · Kiosco</a>
+      <a href="panel-admin.html" class="system-switcher-tab">04 · Admin</a>
+    </nav>
+    <div class="system-switcher-credit">by <strong>STRYV</strong></div>
+  </div>
+</div>
+
+<!-- Top bar -->
+<div class="top-bar">
+  <div style="display:flex;align-items:center;gap:16px">
+    <img src="https://ltveorvqvvlyivjwxjlc.supabase.co/storage/v1/object/public/cravia/cravialogofinal.png" alt="Cravia" style="height:40px;width:auto;display:block;filter:brightness(0) invert(1)">
+    <span class="top-bar-label">Sistema de venta · Modo kiosco self-service</span>
+  </div>
+  <div class="top-bar-credit">by <strong>STRYV</strong></div>
+</div>
+
+<!-- Intro -->
+<div class="intro" style="padding-top:80px">
+  <div class="intro-eyebrow">self-order kiosk · en tienda</div>
+  <h1 class="intro-title">Kiosco de auto-servicio</h1>
+  <p class="intro-sub">Pantalla touch tipo Shake Shack/Panera. El cliente ordena, paga y recoge sin fila. El mismo sistema funciona en modo cajera si la sucursal lo prefiere.</p>
+</div>
+
+<!-- Hero visual: kiosco real en la tienda -->
+<section class="context-hero">
+  <div class="context-hero-inner">
+    <div class="context-hero-media">
+      <img src="https://ltveorvqvvlyivjwxjlc.supabase.co/storage/v1/object/public/cravia/Selforder%20kiosk.png" alt="Kiosco Cravia en tienda">
+    </div>
+    <div class="context-hero-text">
+      <div class="context-hero-eyebrow">— Así se ve en la tienda</div>
+      <h2 class="context-hero-title">Un kiosco<br>que <em>invita</em> a ordenar.</h2>
+      <p class="context-hero-desc">Montado en un pedestal minimalista en la zona de entrada. Pantalla vertical de 22″, interfaz en la identidad Cravia, pago con tarjeta o QR.</p>
+      <ul class="context-hero-list">
+        <li>Reduce tiempos de espera en un 40%</li>
+        <li>Aumenta el ticket promedio (upsell automático)</li>
+        <li>Libera al cajero para enfocarse en entregas</li>
+        <li>Se integra con el panel admin en tiempo real</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- Kiosks row -->
+<div class="kiosk-row">
+
+  <!-- KIOSK 1: Welcome -->
+  <div class="kiosk-wrap">
+    <div class="kiosk">
+      <div class="kiosk-screen">
+        <div class="s1">
+          <div class="s1-brand" style="text-align:center">
+            <img src="https://ltveorvqvvlyivjwxjlc.supabase.co/storage/v1/object/public/cravia/cravialogofinal.png" alt="Cravia" style="height:110px;width:auto;display:inline-block;filter:brightness(0) invert(1)">
+          </div>
+          <div class="s1-center">
+            <div class="s1-cookie has-real" style="background-image:url('https://ltveorvqvvlyivjwxjlc.supabase.co/storage/v1/object/public/cravia/Cookie%20hero%20para%20app.png')"></div>
+            <h2 class="s1-headline">Una galleta<br><em>bien hecha</em><br>cambia el día.</h2>
+            <p class="s1-sub">Ordena aquí, paga aquí, recoge en el mostrador en 8 min.</p>
+          </div>
+          <div class="s1-cta-wrap">
+            <button class="s1-cta">TOCAR PARA ORDENAR →</button>
+            <div class="s1-tap-hint">↑ toca la pantalla</div>
+            <div class="s1-langs">
+              <span class="active">ESPAÑOL</span>
+              <span>ENGLISH</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pedestal"></div>
+    <div class="screen-label">
+      <div class="screen-label-num">Pantalla 01 · inicio</div>
+      <div class="screen-label-title">Bienvenida &amp; attract mode</div>
+      <div class="screen-label-sub">Pantalla en loop cuando no hay cliente. CTA grande para iniciar.</div>
+    </div>
+  </div>
+
+  <!-- KIOSK 2: Menu -->
+  <div class="kiosk-wrap">
+    <div class="kiosk">
+      <div class="kiosk-screen">
+        <div class="s2">
+          <div class="s2-header">
+            <div class="s2-header-top">
+              <img src="https://ltveorvqvvlyivjwxjlc.supabase.co/storage/v1/object/public/cravia/cravialogofinal.png" alt="Cravia" style="height:28px;width:auto;display:block;filter:brightness(0) invert(1)">
+              <div class="s2-step">PASO 1 DE 3</div>
+            </div>
+            <div class="s2-subtitle">elige tus favoritas</div>
+            <h2 class="s2-title">¿Qué antojo traes?</h2>
+          </div>
+          <div class="s2-cats">
+            <button class="s2-cat active">Todas</button>
+            <button class="s2-cat">Signature</button>
+            <button class="s2-cat">Clásicas</button>
+            <button class="s2-cat">Limitada</button>
+            <button class="s2-cat">Cajas</button>
+            <button class="s2-cat">Bebidas</button>
+          </div>
+          <div class="s2-items">
+            <div class="s2-item selected">
+              <span class="s2-item-badge">TOP</span>
+              <div class="s2-img has-real" style="background-image:url('https://ltveorvqvvlyivjwxjlc.supabase.co/storage/v1/object/public/cravia/Chocolate%20Chunk.png')"></div>
+              <div class="s2-name">Chocolate Chunk</div>
+              <div class="s2-desc">Chips 64%, vainilla bourbon</div>
+              <div class="s2-foot">
+                <div class="s2-price">$65</div>
+                <button class="s2-add">+</button>
+              </div>
+            </div>
+            <div class="s2-item">
+              <span class="s2-item-badge">LTDA</span>
+              <div class="s2-img has-real" style="background-image:url('https://ltveorvqvvlyivjwxjlc.supabase.co/storage/v1/object/public/cravia/Nutella%20%26%20Sea%20Salt%20%28destacada%29.png')"></div>
+              <div class="s2-name">Nutella Sea Salt</div>
+              <div class="s2-desc">Corazón Nutella, sal Maldon</div>
+              <div class="s2-foot">
+                <div class="s2-price">$85</div>
+                <button class="s2-add">+</button>
+              </div>
+            </div>
+            <div class="s2-item">
+              <div class="s2-img has-real" style="background-image:url('https://ltveorvqvvlyivjwxjlc.supabase.co/storage/v1/object/public/cravia/White%20Mac%20Crunch.png')"></div>
+              <div class="s2-name">White Mac</div>
+              <div class="s2-desc">Chocolate blanco, macadamia</div>
+              <div class="s2-foot">
+                <div class="s2-price">$70</div>
+                <button class="s2-add">+</button>
+              </div>
+            </div>
+            <div class="s2-item">
+              <div class="s2-img has-real" style="background-image:url('https://ltveorvqvvlyivjwxjlc.supabase.co/storage/v1/object/public/cravia/Red%20Velvet.png')"></div>
+              <div class="s2-name">Red Velvet</div>
+              <div class="s2-desc">Queso crema, chocolate oscuro</div>
+              <div class="s2-foot">
+                <div class="s2-price">$70</div>
+                <button class="s2-add">+</button>
+              </div>
+            </div>
+            <div class="s2-item">
+              <span class="s2-item-badge">SIG</span>
+              <div class="s2-img has-real" style="background-image:url('https://ltveorvqvvlyivjwxjlc.supabase.co/storage/v1/object/public/cravia/Pistachio%20Dream.png')"></div>
+              <div class="s2-name">Pistachio Dream</div>
+              <div class="s2-desc">Pistacho siciliano, cardamomo</div>
+              <div class="s2-foot">
+                <div class="s2-price">$85</div>
+                <button class="s2-add">+</button>
+              </div>
+            </div>
+            <div class="s2-item">
+              <div class="s2-img has-real" style="background-image:url('https://ltveorvqvvlyivjwxjlc.supabase.co/storage/v1/object/public/cravia/Peanut%20Butter%20Heart.png')"></div>
+              <div class="s2-name">PB Heart</div>
+              <div class="s2-desc">Crema de cacahuate fundida</div>
+              <div class="s2-foot">
+                <div class="s2-price">$75</div>
+                <button class="s2-add">+</button>
+              </div>
+            </div>
+          </div>
+          <div class="s2-cart-bar">
+            <div class="s2-cart-info">
+              <div class="s2-cart-count">3</div>
+              <div class="s2-cart-label">Ver pedido</div>
+            </div>
+            <div>
+              <span class="s2-cart-total">$235</span>
+              <span class="s2-cart-arrow">→</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pedestal"></div>
+    <div class="screen-label">
+      <div class="screen-label-num">Pantalla 02 · menú</div>
+      <div class="screen-label-title">Selección de productos</div>
+      <div class="screen-label-sub">Grid táctil grande, categorías arriba, carrito fijo abajo.</div>
+    </div>
+  </div>
+
+  <!-- KIOSK 3: Payment -->
+  <div class="kiosk-wrap">
+    <div class="kiosk">
+      <div class="kiosk-screen">
+        <div class="s3">
+          <div class="s3-header">
+            <div class="s3-header-back">
+              <div class="s3-back-btn">←</div>
+              <div>
+                <div class="s3-title">Tu pedido</div>
+                <div class="s3-title-sub">Paso 3 de 3 · pago</div>
+              </div>
+            </div>
+          </div>
+          <div class="s3-content">
+            <div class="s3-section-label">¿Cómo lo recibes?</div>
+            <div class="s3-method-grid">
+              <div class="s3-method active">
+                <div class="s3-method-icon">🥤</div>
+                <div class="s3-method-name">Aquí en tienda</div>
+                <div class="s3-method-sub">Mesa o mostrador</div>
+              </div>
+              <div class="s3-method">
+                <div class="s3-method-icon">📦</div>
+                <div class="s3-method-name">Para llevar</div>
+                <div class="s3-method-sub">Empacado</div>
+              </div>
+            </div>
+
+            <div class="s3-section-label">Tu orden #CRV-2849</div>
+            <div class="s3-order-summary">
+              <div class="s3-sum-item">
+                <div><span class="s3-sum-item-qty">2×</span><span class="s3-sum-item-name">Chocolate Chunk</span></div>
+                <div>$130</div>
+              </div>
+              <div class="s3-sum-item">
+                <div><span class="s3-sum-item-qty">1×</span><span class="s3-sum-item-name">Nutella Sea Salt</span></div>
+                <div>$85</div>
+              </div>
+              <div class="s3-sum-item">
+                <div><span class="s3-sum-item-qty">1×</span><span class="s3-sum-item-name">Americano grande</span></div>
+                <div>$55</div>
+              </div>
+            </div>
+
+            <div class="s3-loyalty"><strong>💡 ¿Eres miembro Cravia?</strong> Escanea tu QR en la siguiente pantalla para ganar 27 pts y aplicar tu 5% de descuento.</div>
+
+            <div class="s3-totals">
+              <div class="s3-total-row"><span>Subtotal</span><span>$270</span></div>
+              <div class="s3-total-row"><span>IVA incluido</span><span>$41</span></div>
+              <div class="s3-total-row grand"><span>Total</span><span>$270</span></div>
+            </div>
+
+            <div class="s3-section-label">Método de pago</div>
+            <div class="s3-method-grid">
+              <div class="s3-method active">
+                <div class="s3-method-icon">💳</div>
+                <div class="s3-method-name">Tarjeta</div>
+                <div class="s3-method-sub">Inserta o acerca</div>
+              </div>
+              <div class="s3-method">
+                <div class="s3-method-icon">📱</div>
+                <div class="s3-method-name">QR / App</div>
+                <div class="s3-method-sub">Apple Pay, Mercado Pago</div>
+              </div>
+            </div>
+
+            <button class="s3-pay-cta">
+              <span>Pagar $270</span>
+              <span>→</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pedestal"></div>
+    <div class="screen-label">
+      <div class="screen-label-num">Pantalla 03 · pago</div>
+      <div class="screen-label-title">Confirma y paga</div>
+      <div class="screen-label-sub">Método de entrega + resumen + opciones de pago integrado.</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Features -->
+<section class="features">
+  <h2 class="features-title">Características del sistema</h2>
+  <p class="features-sub">Un solo software, instalado en pantallas touch verticales tipo iPad Pro en pedestal. Una sucursal puede usar 1, 2 o 3 kioscos según flujo.</p>
+  <div class="features-grid">
+    <div class="feature-card">
+      <span class="feature-icon">⚡</span>
+      <div class="feature-name">Ordena en 30 segundos</div>
+      <p class="feature-desc">Interfaz optimizada para flujos rápidos. Cero fila en horas pico. El cliente toca, paga y recoge sin hablar con nadie.</p>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🔄</span>
+      <div class="feature-name">Modo cajera &amp; modo kiosco</div>
+      <p class="feature-desc">Mismo sistema, dos modos. Si la sucursal prefiere cajera, se cambia con un login. Decisión operativa por tienda.</p>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">💳</span>
+      <div class="feature-name">Pagos integrados</div>
+      <p class="feature-desc">Tarjeta con lector físico (Clip/Stripe), Apple Pay, Google Pay y QR de app Cravia. IVA calculado automático.</p>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🎯</span>
+      <div class="feature-name">Programa de lealtad</div>
+      <p class="feature-desc">El cliente escanea su QR desde la app Cravia y el kiosco acredita puntos y descuentos automáticamente.</p>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">📊</span>
+      <div class="feature-name">Conectado al dashboard</div>
+      <p class="feature-desc">Cada venta en el kiosco se registra en tiempo real en el panel admin. Inventario se descuenta solo.</p>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🌐</span>
+      <div class="feature-name">Bilingüe ES / EN</div>
+      <p class="feature-desc">Esencial para el aeropuerto. El cliente elige su idioma y toda la experiencia se adapta al instante.</p>
+    </div>
+  </div>
+</section>
+
+<div class="footer">Sistema de venta interno Cravia · Modo kiosco self-service · Construido por <strong>STRYV</strong></div>
+
+</body>
+</html>

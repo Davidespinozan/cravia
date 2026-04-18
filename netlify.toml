@@ -1,0 +1,34 @@
+[build]
+  publish = "."
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[redirects]]
+  from = "/cliente"
+  to = "/sistemas/plataforma-cliente.html"
+  status = 301
+
+[[redirects]]
+  from = "/pos"
+  to = "/sistemas/venta-cajera.html"
+  status = 301
+
+[[redirects]]
+  from = "/kiosco"
+  to = "/sistemas/venta-kiosco.html"
+  status = 301
+
+[[redirects]]
+  from = "/admin"
+  to = "/sistemas/panel-admin.html"
+  status = 301
