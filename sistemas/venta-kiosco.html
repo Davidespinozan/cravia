@@ -24,9 +24,8 @@
   --border-soft:#ebe0d0;--border:#d9cab4;
   --success:#2d7548;--warning:#c4882b;
 }
-body{font-family:'Inter',-apple-system,sans-serif;background:#2a2622;color:var(--text-dark);font-size:14.5px;line-height:1.55;-webkit-font-smoothing:antialiased;min-height:100vh;overflow-x:hidden;padding:0 0 40px}
-/* Safe area top: verde oscuro para matchear header (evita que el #2a2622 del body se vea en el notch) */
-body::before{content:'';position:fixed;top:0;left:0;right:0;height:env(safe-area-inset-top);background:#003d33;z-index:1001;pointer-events:none}
+/* Safe area top: verde oscuro (#003d33) sobre el notch; resto del body gris (#2a2622). Dos capas de background en body: la verde cubre solo env(safe-area-inset-top) px desde arriba */
+body{font-family:'Inter',-apple-system,sans-serif;background:linear-gradient(#003d33,#003d33) no-repeat top/100% env(safe-area-inset-top),#2a2622;background-attachment:fixed,scroll;color:var(--text-dark);font-size:14.5px;line-height:1.55;-webkit-font-smoothing:antialiased;min-height:100vh;overflow-x:hidden;padding:0 0 40px}
 
 /* Top bar — oculto: redundante con system-switcher (Cravia logo + STRYV credit ya estan ahi) */
 .top-bar{display:none}
