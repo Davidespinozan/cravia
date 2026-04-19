@@ -24,8 +24,10 @@
   --border-soft:#ebe0d0;--border:#d9cab4;
   --success:#2d7548;--warning:#c4882b;
 }
-/* Safe area top: verde oscuro (#003d33) sobre el notch; resto del body gris (#2a2622). Dos capas de background en body: la verde cubre solo env(safe-area-inset-top) px desde arriba */
-body{font-family:'Inter',-apple-system,sans-serif;background:linear-gradient(#003d33,#003d33) no-repeat top/100% env(safe-area-inset-top),#2a2622;background-attachment:fixed,scroll;color:var(--text-dark);font-size:14.5px;line-height:1.55;-webkit-font-smoothing:antialiased;min-height:100vh;overflow-x:hidden;padding:0 0 40px}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',-apple-system,sans-serif;background:var(--milk-sugar);color:var(--text-dark);font-size:14.5px;line-height:1.55;-webkit-font-smoothing:antialiased;min-height:100vh;overflow-x:hidden}
+/* Wrapper oscuro del kiosco — mantiene el diseño dark del contenido, sin ensuciar body/safe-area */
+.page-dark{background:#2a2622;padding-bottom:40px}
 
 /* Top bar — oculto: redundante con system-switcher (Cravia logo + STRYV credit ya estan ahi) */
 .top-bar{display:none}
@@ -362,6 +364,9 @@ body{font-family:'Inter',-apple-system,sans-serif;background:linear-gradient(#00
   <div class="top-bar-credit">by <strong>STRYV</strong></div>
 </div>
 
+<!-- Wrapper dark: todo el contenido oscuro vive acá, el body queda cream como los otros 3 sistemas -->
+<div class="page-dark">
+
 <!-- Intro -->
 <div class="intro" style="padding-top:80px">
   <div class="intro-eyebrow">self-order kiosk · en tienda</div>
@@ -647,6 +652,8 @@ body{font-family:'Inter',-apple-system,sans-serif;background:linear-gradient(#00
     </div>
   </div>
 </section>
+
+</div><!-- /.page-dark -->
 
 <div class="footer">Sistema de venta interno Cravia · Modo kiosco self-service · Construido por <strong>STRYV</strong></div>
 
